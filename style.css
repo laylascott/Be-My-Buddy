@@ -131,3 +131,37 @@ form p a{
   background: gray;
   color: white;
 }
+
+.wrapper {
+  width: 78%;
+  margin: 15px 0;
+  border-radius: 3px;
+  display: flexbox;
+  align-items: center;
+  max-height: 65px;
+  position:absolute;
+  top: 46%;
+
+
+}
+
+.wrapper textarea {
+  width: 100%;
+  height: 59px;
+  padding: 15px;
+  outline: none;
+  resize: none;
+  font-size: 16px;
+  margin-top: 20px;
+  border-radius: 5px;
+  max-height: 120px;
+
+}
+
+textarea:is(:focus, :valid) {
+  padding: 14px;
+}
+
+textarea::-webkit-scrollbar {
+  width: 0px;
+}
