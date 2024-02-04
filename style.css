@@ -101,7 +101,11 @@ input{
   outline: 0;
   padding: 18px 15px;
 }
+form p a{
+  text-decoration: underline;
+  color: white;
 
+}
 .btn-field{
   width: 100%;
   display: flex;
@@ -120,7 +124,7 @@ input{
 }
 
 .input-group{
-  height: 280px;
+  height: 290px;
 }
 
 .btn-field button.disable {
