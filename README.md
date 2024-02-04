@@ -1,3 +1,3 @@
 # Be-My-Buddy
 
-#This is our code!
+#Welcome to Be My Buddy!
