@@ -6,9 +6,10 @@ from werkzeug.local import LocalProxy
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask import session
 from flask_limiter.util import get_remote_address
-flask db init
-flask db migrate
-flask db upgrade
+from flask_migrate import Migrate
+# flask db init
+# flask db migrate
+# flask db upgrade
 
 
 
@@ -16,6 +17,24 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = 'your_secret_key'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'  # Use SQLite for simplicity
 db = SQLAlchemy(app)
+
+# Initialize Flask-Migrate
+migrate = Migrate(app, db)
+
+# Link/ Route HTML pages
+@app.route('/')
+def index():
+    return 'Index Page'
+@app.route('/about')
+def index():
+    return 'About Page'
+@app.route('/avaliability')
+def index():
+    return 'Avaliability Page'
+@app.route('/report')
+def index():
+    return 'Report Page'
+
 
 # Example user data (for demonstration purposes)
 users = {'user1': generate_password_hash('password1'), 'user2': generate_password_hash('password2')}
