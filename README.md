@@ -2,7 +2,7 @@
 - Step 1. Move all HTML code into a folder named `templates`
 - Step 2. all CSS and assets need to be moved to a folder named `static`
 
-- To connect the HTMl pages to app.py use the following template:
+- To connect the HTML pages to app.py use the following template:
 ```
 @app.route('/')
 def index():
