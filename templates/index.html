@@ -1,77 +1,109 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home | Be My Buddy</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-  </head>
-  <body>
+</head>
+<body>
     <h1>Be My Buddy</h1>
 
     <nav class="navbar">
-      <ul>
-        <li><a href="index.html"> Home</a></li>
-        <li><a href="about.html"> About</a></li>
-        <li><a href="availability.html"> Set Availability</a></li>
-        <li><a href="report.html"> Report</a></li>
-      </ul>
+        <ul>
+            <li><a href="{{ url_for('home') }}">Home</a></li>
+            <li><a href="{{ url_for('about') }}">About</a></li>
+            <li><a href="{{ url_for('availability') }}">Set Availability</a></li>
+            <li><a href="{{ url_for('report') }}">Report</a></li>
+        </ul>
     </nav>
 
     <div class="container">
-      <div class="form-box">
-        <h1 id="title">Sign Up</h1>
-        <form>
-          <div class="input-group">
-            <div class="input-field" id="nameField">
-              <input type="text" placeholder="Full Name" required />
-            </div>
+        <div class="form-box">
+            <h1 id="title">Sign Up</h1>
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ category }}">{{ message }}</div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+            <form method="POST" action="{{ url_for('home') }}">
+                {{ signup_form.csrf_token }}
+                <div class="input-group">
+                    <div class="input-field" id="nameField">
+                        {{ signup_form.username(class="form-control", placeholder="Username") }}
+                    </div>
+                    <div class="input-field" id="emailField">
+                        {{ signup_form.email(class="form-control", placeholder="Email") }}
+                    </div>
+                    <div class="input-field" id="numberField">
+                        {{ signup_form.phone_number(class="form-control", placeholder="Phone Number") }}
+                    </div>
+                    <div class="input-field">
+                        {{ signup_form.password(class="form-control", placeholder="Password") }}
+                    </div>
+                    <div class="input-field" id="confirmPasswordField">
+                        {{ signup_form.confirm_password(class="form-control", placeholder="Confirm Password") }}
+                    </div>
+                </div>
+                <br><br>
+                <div class="btn-field">
+                    <button type="submit" name="action" value="signup" id="signupBtn" class="btn btn-primary">Sign Up</button>
+                    <button type="button" id="toggleToSigninBtn" class="btn btn-secondary">Sign In</button>
+                </div>
+            </form>
 
-            <div class="input-field" id="numberField">
-              <input type="tel" placeholder="Phone Number" required />
-            </div>
-
-            <div class="input-field">
-              <input type="email" placeholder="VT Email" required />
-            </div>
-
-            <div class="input-field">
-              <input type="password" placeholder="Password" required />
-            </div>
-          </div>
-          <p><a href="availability.html"> Continue</a></p>
-          <div class="btn-field">
-            <button type="'button" id="signupBtn">Sign Up</button>
-            <button type="button" id="signinBtn" class="disable">
-              Sign In
-            </button>
-          </div>
-        </form>
-      </div>
+            <form method="POST" action="{{ url_for('home') }}" id="loginForm" style="display: none;">
+                {{ login_form.csrf_token }}
+                <div class="input-group">
+                    <div class="input-field">
+                        {{ login_form.username(class="form-control", placeholder="Username") }}
+                    </div>
+                    <div class="input-field">
+                        {{ login_form.password(class="form-control", placeholder="Password") }}
+                    </div>
+                </div>
+                <br><br>
+                <div class="btn-field">
+                    <button type="button" id="toggleToSignupBtn" class="btn btn-secondary">Sign Up</button>
+                    <button type="submit" name="action" value="login" class="btn btn-primary">Sign In</button>
+                </div>
+            </form>
+        </div>
     </div>
-  </body>
 
-  <script>
-    let signupBtn = document.getElementById("signupBtn");
-    let signinBtn = document.getElementById("signinBtn");
-    let nameField = document.getElementById("nameField");
-    let numberField = document.getElementById("numberField");
-    let title = document.getElementById("title");
+    <script>
+        let signupBtn = document.getElementById("signupBtn");
+        let toggleToSigninBtn = document.getElementById("toggleToSigninBtn");
+        let toggleToSignupBtn = document.getElementById("toggleToSignupBtn");
+        let nameField = document.getElementById("nameField");
+        let emailField = document.getElementById("emailField");
+        let numberField = document.getElementById("numberField");
+        let confirmPasswordField = document.getElementById("confirmPasswordField");
+        let title = document.getElementById("title");
+        let signupForm = document.querySelector("form[action='{{ url_for('home') }}']");
+        let loginForm = document.getElementById("loginForm");
 
-    signinBtn.onclick = function () {
-      nameField.style.maxHeight = "0";
-      numberField.style.maxHeight = "0";
-      title.innerHTML = "Sign In";
-      signupBtn.classList.add("disable");
-      signinBtn.classList.remove("disable");
-    };
+        toggleToSigninBtn.onclick = function () {
+            nameField.style.display = "none";
+            emailField.style.display = "none";
+            numberField.style.display = "none";
+            confirmPasswordField.style.display = "none";
+            title.innerHTML = "Sign In";
+            signupForm.style.display = "none";
+            loginForm.style.display = "block";
+        };
 
-    signupBtn.onclick = function () {
-      nameField.style.maxHeight = "60px";
-      numberField.style.maxHeight = "60px";
-      title.innerHTML = "Sign Up";
-      signupBtn.classList.remove("disable");
-      signinBtn.classList.add("disable");
-    };
-  </script>
+        toggleToSignupBtn.onclick = function () {
+            nameField.style.display = "block";
+            emailField.style.display = "block";
+            numberField.style.display = "block";
+            confirmPasswordField.style.display = "block";
+            title.innerHTML = "Sign Up";
+            signupForm.style.display = "block";
+            loginForm.style.display = "none";
+        };
+    </script>
+</body>
 </html>
