@@ -1,7 +1,7 @@
 Hi, Anya the following steps should get your repository code, as it stands, working.
 
 1. Move all HTML code into a folder named `templates`
-2. Move all CSS and assets (like images) need to be moved to a folder named `static`
+2. Move all CSS and assets (like images) to a folder named `static`
    Your file structure should look like this when you are done:
    ![Screenshot of file structure](/filestruct.png).
 3. Delete lines 9 through 11 in `app.py`
