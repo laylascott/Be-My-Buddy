@@ -2,27 +2,29 @@ Hi, Anya the following steps should get your repository code, as it stands, work
 
 1. Move all HTML code into a folder named `templates`
 2. Move all CSS and assets (like images) to a folder named `static`
+
    Your file structure should look like this when you are done:
+   
    ![Screenshot of file structure](/filestruct.png).
-3. Delete lines 9 through 11 in `app.py`
+4. Delete lines 9 through 11 in `app.py`
      -   _These lines are commands that should be run in the terminal. I will instruct you how to do that in just a moment._
-4. Delete line 8 (it is never used)
-5. Add the following import `from flask_migrate import Migrate`
-6. On line 17 add `migrate = Migrate(app, db)` to use the import we just added.
-7. You may delete lines 18 and 19 they will not be used later.
-8. Line 70 should be replaced with the following:
+5. Delete line 8 (it is never used)
+6. Add the following import `from flask_migrate import Migrate`
+7. On line 17 add `migrate = Migrate(app, db)` to use the import we just added.
+8. You may delete lines 18 and 19 they will not be used later.
+9. Line 70 should be replaced with the following:
     ```python
     with app.app_context():
     db.create_all()
     ```
-9. Now we need to run the commands to intialize the database
+10. Now we need to run the commands to intialize the database
     Run them in order (and do not copy the $)
     ```sh
     $ flask db init
     $ flask db migrate
     $ flask db upgrade
     ```
-10. You will see new files and objects were created. This is a good sign!
+11. You will see new files and objects were created. This is a good sign!
 __Now your database is intialized and ready to be used.__
 
 __We are going to switch over to adjusting the HTML code now__
