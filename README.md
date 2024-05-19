@@ -12,12 +12,12 @@ Hi, Anya! Follow these steps to get your repository code up and running.
 
    <img src="/filestruct.png" alt="Screenshot of file structure" width="20%" />
 ## Updates to `app.py`
-   1. Delete lines 9 through 11.
-     >These lines are commands that should be run in the terminal. I will instruct you on how to do that in just a moment.*
-   2. Delete line 8 *(it is never used)*.
+   1. Delete lines **9** through **11**.
+      > *These lines are commands that should be run in the terminal. I will instruct you on how to do that in just a moment.*
+   2. Delete line **8** *(it is never used)*.
    3. Add the following import: `from flask_migrate import Migrate`.
-   4. On line 17, add `migrate = Migrate(app, db)` to use the import we just added.
-   5. You may delete lines 18 and 19 as they will not be used later.
+   4. On line **17**, add `migrate = Migrate(app, db)` to use the import we just added.
+   5. You may delete lines **18** and **19** as they will not be used later.
    6. Replace line 70 with the following:
      ```python
      with app.app_context():
@@ -257,7 +257,7 @@ Run the following command in your terminal:
 ```shell
 $ python app.py
 ```
-> You will then be given a link to follow that looks like so '`* Running on http://127.0.0.1:5000`**. Cmd + click it to open a local port and see your site running.
+> You will then be given a link to follow that looks like so '`* Running on http://127.0.0.1:5000`. Cmd + click it to open a local port and see your site running.
 
 Should you encounter any issues on this port you can run your app on a different port with the command
 ```
