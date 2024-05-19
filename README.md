@@ -62,7 +62,7 @@ def home():
                 db.session.add(new_user)
                 db.session.commit()
                 flash('Account created successfully! You can now log in.', 'success')
-                return redirect(url_for('home'))
+                return redirect(url_for('availability'))
 
         elif action == 'login' and login_form.validate_on_submit():
             username = login_form.username.data
