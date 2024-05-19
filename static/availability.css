@@ -1,0 +1,40 @@
+h2{
+    text-align: center;
+    margin-top: 2.5%;
+}
+.tg {
+    border-collapse: collapse;
+    border-spacing: 0;
+    margin: 20px auto;
+}
+
+.tg-mkj1{
+    width: 70px;
+}
+
+.tg td {
+    border-color: black;
+    border-style: solid;
+    border-width: 1px;
+    overflow: hidden;
+    padding: 10px 5px;
+    word-break: normal;
+    text-align: right;
+
+}
+th {
+    border-color: black;
+    border-style: solid;
+    border-width: 1px;
+    overflow: hidden;
+    padding: 10px 5px;
+    word-break: normal;
+    text-align: center;
+    width: 120px;
+    background-color: gainsboro;
+}
+
+.tg-0lax2:hover{
+    background-color:seagreen;
+}
+

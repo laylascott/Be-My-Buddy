@@ -5,10 +5,8 @@ from wtforms import StringField, PasswordField, SubmitField, validators
 from werkzeug.local import LocalProxy
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask import session
-from flask_limiter.util import get_remote_address
-flask db init
-flask db migrate
-flask db upgrade
+from flask_migrate import Migrate
+
 
 
 
@@ -16,7 +14,7 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = 'your_secret_key'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'  # Use SQLite for simplicity
 db = SQLAlchemy(app)
-
+migrate = Migrate(app, db)
 # Example user data (for demonstration purposes)
 users = {'user1': generate_password_hash('password1'), 'user2': generate_password_hash('password2')}
 
@@ -69,67 +67,72 @@ class Report(db.Model):
 
 
 
-db.create_all()
+with app.app_context():
+    db.create_all()
 
-@app.route('/')
+@app.route('/', methods=['GET', 'POST'])
 def home():
+    signup_form = SignupForm()
+    login_form = LoginForm()
+
+    if request.method == 'POST':
+        action = request.form.get('action')
+        
+        if action == 'signup' and signup_form.validate_on_submit():
+            username = signup_form.username.data
+            email = signup_form.email.data
+            phone_number = signup_form.phone_number.data
+            password = signup_form.password.data
+
+            # Check if the username is already taken
+            if User.query.filter_by(username=username).first():
+                flash('Username is already taken. Please choose a different one.', 'danger')
+            elif User.query.filter_by(email=email).first():
+                flash('Email is already registered. Please choose a different one.', 'danger')
+            elif User.query.filter_by(phone_number=phone_number).first():
+                flash('Phone number is already registered. Please choose a different one.', 'danger')
+            else:
+                new_user = User(username=username, email=email, phone_number=phone_number,
+                                password=generate_password_hash(password, method='pbkdf2:sha1'))
+                db.session.add(new_user)
+                db.session.commit()
+                flash('Account created successfully! You can now log in.', 'success')
+                return redirect(url_for('availability'))
+
+        elif action == 'login' and login_form.validate_on_submit():
+            username = login_form.username.data
+            password = login_form.password.data
+
+            user = User.query.filter_by(username=username).first()
+
+            if user:
+                if check_password_hash(user.password, password):
+                    session['user_id'] = user.id
+                    flash(f'Welcome, {username}!', 'success')
+                    return redirect(url_for('availability'))
+                else:
+                    flash('Incorrect password', 'danger')
+            else:
+                flash('Incorrect username', 'danger')
+
+    return render_template('index.html', signup_form=signup_form, login_form=login_form)
+
+@app.route('/availability')
+def availability():
     if 'user_id' in session:
         user_id = session['user_id']
         user = User.query.get(user_id)
         time_slots = user.time_slots
-        users = User.query.all()
-        return render_template('index.html', time_slots=time_slots, username=user.username, users=users)
+        return render_template('availability.html', time_slots=time_slots, username=user.username)
+    return redirect(url_for('home'))
 
-    return redirect(url_for('login'))
+@app.route('/about')
+def about():
+    return render_template('about.html')
 
-
-
-@app.route('/signup', methods=['GET', 'POST'])
-def signup():
-    form = SignupForm()
-    if form.validate_on_submit():
-        username = form.username.data
-        email=form.email.data
-        phone_number=form.phone_number.data
-        password = form.password.data
-
-        # Check if the username is already taken
-        if User.query.filter_by(username=username).first():
-            flash('Username is already taken. Please choose a different one.', 'Username is already taken')
-            return render_template('signup.html', form=form)
-
-        # Create a new user
-        new_user = User(username=username, password=generate_password_hash(password, method='sha256'))
-        db.session.add(new_user)
-        db.session.commit()
-
-        flash('Account created successfully! You can now log in.', 'success')
-        return redirect(url_for('home'))
-
-    return render_template('signup.html', form=form)
-
-
-
-
-@app.route('/login', methods=['GET', 'POST'])
-def login():
-    if request.method == 'POST':
-        username = request.form['username']
-        password = request.form['password']
-
-        user = User.query.filter_by(username=username).first()
-
-        if user and check_password_hash(user.password, password):
-            # Successful login
-            flash(f'Welcome, {username}!', 'success')
-            return redirect(url_for('home'))
-        else:
-            # Invalid login
-            flash('Incorrect username or password. Please try again.', 'danger')
-
-    return render_template('login.html')
-
-
+@app.route('/report')
+def report():
+    return render_template('report.html')
 
 
 

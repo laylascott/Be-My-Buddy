@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home | Be My Buddy</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    
+<header>
+  <nav class="navbar">
+    <h1>Be My Buddy</h1>
+      <ul>
+          <li><a href="{{ url_for('home') }}">Home</a></li>
+          <li><a href="{{ url_for('about') }}">About</a></li>
+          <li><a href="{{ url_for('availability') }}">Set Availability</a></li>
+          <li><a href="{{ url_for('report') }}">Report</a></li>
+      </ul>
+  </nav>
+</header>
+    
+
+    <div class="container">
+        <div class="form-box">
+            <h1 id="title">Sign Up</h1>
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ category }}">{{ message }}</div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+            <form method="POST" action="{{ url_for('home') }}">
+                {{ signup_form.csrf_token }}
+                <div class="input-group">
+                    <div class="input-field" id="nameField">
+                        {{ signup_form.username(class="form-control", placeholder="Username") }}
+                    </div>
+                    <div class="input-field" id="emailField">
+                        {{ signup_form.email(class="form-control", placeholder="Email") }}
+                    </div>
+                    <div class="input-field" id="numberField">
+                        {{ signup_form.phone_number(class="form-control", placeholder="Phone Number") }}
+                    </div>
+                    <div class="input-field">
+                        {{ signup_form.password(class="form-control", placeholder="Password") }}
+                    </div>
+                    <div class="input-field" id="confirmPasswordField">
+                        {{ signup_form.confirm_password(class="form-control", placeholder="Confirm Password") }}
+                    </div>
+                </div>
+                <br><br>
+                <div class="btn-field">
+                    <button type="submit" name="action" value="signup" id="signupBtn" class="btn btn-primary">Sign Up</button>
+                    <button type="button" id="toggleToSigninBtn" class="btn btn-secondary">Login</button>
+                </div>
+            </form>
+
+            <form method="POST" action="{{ url_for('home') }}" id="loginForm" style="display: none;">
+                {{ login_form.csrf_token }}
+                <div class="input-group">
+                    <div class="input-field">
+                        {{ login_form.username(class="form-control", placeholder="Username") }}
+                    </div>
+                    <div class="input-field">
+                        {{ login_form.password(class="form-control", placeholder="Password") }}
+                    </div>
+                </div>
+                <br><br>
+                <div class="btn-field">
+                    <button type="button" id="toggleToSignupBtn" class="btn btn-secondary">Sign Up</button>
+                    <button type="submit" name="action" value="login" class="btn btn-primary">Login</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        let signupBtn = document.getElementById("signupBtn");
+        let toggleToSigninBtn = document.getElementById("toggleToSigninBtn");
+        let toggleToSignupBtn = document.getElementById("toggleToSignupBtn");
+        let nameField = document.getElementById("nameField");
+        let emailField = document.getElementById("emailField");
+        let numberField = document.getElementById("numberField");
+        let confirmPasswordField = document.getElementById("confirmPasswordField");
+        let title = document.getElementById("title");
+        let signupForm = document.querySelector("form[action='{{ url_for('home') }}']");
+        let loginForm = document.getElementById("loginForm");
+
+        toggleToSigninBtn.onclick = function () {
+            nameField.style.display = "none";
+            emailField.style.display = "none";
+            numberField.style.display = "none";
+            confirmPasswordField.style.display = "none";
+            title.innerHTML = "Login";
+            signupForm.style.display = "none";
+            loginForm.style.display = "block";
+        };
+
+        toggleToSignupBtn.onclick = function () {
+            nameField.style.display = "block";
+            emailField.style.display = "block";
+            numberField.style.display = "block";
+            confirmPasswordField.style.display = "block";
+            title.innerHTML = "Sign Up";
+            signupForm.style.display = "block";
+            loginForm.style.display = "none";
+        };
+    </script>
+</body>
+</html>

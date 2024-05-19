@@ -1,4 +1,3 @@
-
 /* availability and navbar formatting*/
 
 label {
@@ -6,84 +5,90 @@ label {
   margin-bottom: 10px;
   margin-top: 10px;
 }
+
 input[type="checkbox"] {
   margin-right: 10px;
 }
 
-h1 {
-  text-align: center;
+header{
+  align-items: center;
+  justify-content: center;
+  background-color: rgb(99, 0, 49);
+  margin: 0 auto;
+}
+.navbar{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 .navbar ul {
+
   list-style-type: none;
-  background-color: rgb(99,0,49);
+  
   padding: 0px;
   margin: 0px;
   overflow: hidden;
 }
-.navbar a {
+
+.navbar a, h1 {
   color: white;
   text-decoration: none;
   padding: 15px;
   display: block;
   text-align: center;
 }
+
 .navbar a:hover {
-  background-color: rgb(207,69,32);
+  background-color: rgb(207, 69, 32);
 }
+
 .navbar li {
-  float: left;
+  float: right;
 }
+
 main {
   margin: 20px;
 }
 
 /* sign up formatting */
 
-*{
-  margin: 5;
+* {
+  margin: 0;
   padding: 0;
-  font-family:Verdana, Geneva, Tahoma, sans-serif;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
   box-sizing: border-box;
 }
 
-.container {
-  width: 100%;
-  height: 100%;
-  position: relative;
-}
 
 .form-box {
-  width: 90%;
+  margin: 2.55% auto;
   max-width: 450px;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, 50%);
-  background: rgb(99,0,49);
+  background: rgb(99, 0, 49);
   padding: 50px 50px 70px;
   text-align: center;
+  border-radius: 20px;
 }
 
-.form-box h1{
+.form-box h1 {
   font-size: 25px;
-  margin-bottom: 60px;
+
   color: white;
   position: relative;
 }
 
-.form-box h1::after{
+.form-box h1::after {
   content: '';
   width: 30px;
   height: 4px;
   border-radius: 3px;
   background: white;
-  position: absolute;
+  position: relative;
   bottom: -12px;
   left: 50%;
   transform: translateX(-50%)
 }
 
-.input-field{
+.input-field {
   background: white;
   margin: 15px 0;
   border-radius: 3px;
@@ -94,26 +99,29 @@ main {
   overflow: hidden;
 }
 
-input{
+input {
   width: 100%;
   background: transparent;
   border: 0;
   outline: 0;
   padding: 18px 15px;
 }
-form p a{
+
+form p a {
   text-decoration: underline;
   color: white;
 
 }
-.btn-field{
+
+.btn-field {
   width: 100%;
   display: flex;
   justify-content: space-between;
 }
+
 .btn-field button {
   flex-basis: 48%;
-  background: rgb(207,69,32);
+  background: rgb(207, 69, 32);
   color: white;
   height: 40px;
   border-radius: 20px;
@@ -123,8 +131,8 @@ form p a{
   transition: background 1s;
 }
 
-.input-group{
-  height: 290px;
+.input-group {
+  margin-bottom: 60px;
 }
 
 .btn-field button.disable {
@@ -132,36 +140,19 @@ form p a{
   color: white;
 }
 
-.wrapper {
-  width: 78%;
-  margin: 15px 0;
-  border-radius: 3px;
-  display: flexbox;
-  align-items: center;
-  max-height: 65px;
-  position:absolute;
-  top: 46%;
 
-
-}
 
 .wrapper textarea {
   width: 100%;
-  height: 59px;
+  height: 150px;
   padding: 15px;
   outline: none;
   resize: none;
   font-size: 16px;
-  margin-top: 20px;
   border-radius: 5px;
-  max-height: 120px;
+  max-height: fit-content;
 
 }
-
-textarea:is(:focus, :valid) {
-  padding: 14px;
-}
-
-textarea::-webkit-scrollbar {
-  width: 0px;
+#availabilityForm{
+  flex-direction: column;
 }
