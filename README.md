@@ -257,7 +257,7 @@ Run the following command in your terminal:
 ```shell
 $ python app.py
 ```
-> You will then be given a link to follow that looks like so '`* Running on http://127.0.0.1:5000`. Cmd + click it to open a local port and see your site running.
+> You will then be given a link to follow that looks like so `* Running on http://127.0.0.1:5000`. Cmd + click it to open a local port and see your site running.
 
 Should you encounter any issues on this port you can run your app on a different port with the command
 ```
