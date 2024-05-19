@@ -7,9 +7,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask import session
 from flask_limiter.util import get_remote_address
 from flask_migrate import Migrate
-# flask db init
-# flask db migrate
-# flask db upgrade
+
 
 
 
@@ -21,23 +19,10 @@ db = SQLAlchemy(app)
 # Initialize Flask-Migrate
 migrate = Migrate(app, db)
 
-# Link/ Route HTML pages
-@app.route('/')
-def index():
-    return 'Index Page'
-@app.route('/about')
-def index():
-    return 'About Page'
-@app.route('/avaliability')
-def index():
-    return 'Avaliability Page'
-@app.route('/report')
-def index():
-    return 'Report Page'
-
 
 # Example user data (for demonstration purposes)
 users = {'user1': generate_password_hash('password1'), 'user2': generate_password_hash('password2')}
+
 
 
 
@@ -87,8 +72,8 @@ class Report(db.Model):
     reported_user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
 
-
-db.create_all()
+with app.app_context():
+    db.create_all()
 
 @app.route('/')
 def home():
@@ -99,7 +84,7 @@ def home():
         users = User.query.all()
         return render_template('index.html', time_slots=time_slots, username=user.username, users=users)
 
-    return redirect(url_for('login'))
+    return redirect(url_for('login'))  # Redirect to login only if user is not logged in
 
 
 
@@ -108,8 +93,8 @@ def signup():
     form = SignupForm()
     if form.validate_on_submit():
         username = form.username.data
-        email=form.email.data
-        phone_number=form.phone_number.data
+        email = form.email.data
+        phone_number = form.phone_number.data
         password = form.password.data
 
         # Check if the username is already taken
@@ -118,7 +103,7 @@ def signup():
             return render_template('signup.html', form=form)
 
         # Create a new user
-        new_user = User(username=username, password=generate_password_hash(password, method='sha256'))
+        new_user = User(username=username, password=generate_password_hash(password, method='pbkdf2:sha1'))
         db.session.add(new_user)
         db.session.commit()
 
@@ -138,16 +123,21 @@ def login():
 
         user = User.query.filter_by(username=username).first()
 
+        print("User:", user)  # Debug statement
+
+        if user:
+            print("Stored Password Hash:", user.password)  # Debug statement
+            print("Entered Password Hash:", generate_password_hash(password))  # Debug statement
+
         if user and check_password_hash(user.password, password):
             # Successful login
             flash(f'Welcome, {username}!', 'success')
             return redirect(url_for('home'))
         else:
             # Invalid login
-            flash('Incorrect username or password. Please try again.', 'danger')
+            return redirect(url_for('home'))
 
     return render_template('login.html')
-
 
 
 

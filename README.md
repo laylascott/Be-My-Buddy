@@ -1,15 +1,24 @@
 ### How to Connect Python Flask to HTML and CSS
-- Step 1. Move all HTML code into a folder named `templates`
-- Step 2. all CSS and assets need to be moved to a folder named `static`
+ 1. Move all HTML code into a folder named `templates`
+ 2. all CSS and assets need to be moved to a folder named `static`
+ 3. To connect CSS to HTML add this link to the `<head>` tag of all HTML files.
+    ```
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    ```
 
-- To connect the HTML pages to app.py use the following template:
+### Database Set Up
+Before your app will work ensure you have run the following commands on your local machine, in the terminal *(This only needs to be done once to create and set up your database)*
+*Note: do not include the `$`*
 ```
-@app.route('/')
-def index():
-    return 'Index Page'
+$ flask db init
+$ flask db migrate
+$ flask db upgrade
 ```
 
-- To connect CSS to HTML add this link to `<head>`
+### Running in Debug
+To run your app in debug mode on a local server you can run
 ```
- <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+python app.py
 ```
+### Stopping Debug
+Type `ctrl + C` in the terminal
