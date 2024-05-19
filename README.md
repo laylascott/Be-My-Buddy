@@ -1,6 +1,8 @@
 # Be My Buddy
 You can clone this repo to your computer and run it to see it for yourself.
  [Directions for Running](#Running-your-App)
+ > Note I made some CSS style changes that are not described here but you can find them in the repo code.
+
 # Set Up Guide
 
 Hi, Anya! Follow these steps to get your repository code up and running.
