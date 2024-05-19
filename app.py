@@ -63,6 +63,7 @@ class Report(db.Model):
 
 with app.app_context():
     db.create_all()
+    
 @app.route('/', methods=['GET', 'POST'])
 def home():
     signup_form = SignupForm()
