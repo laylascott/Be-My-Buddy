@@ -1,6 +1,6 @@
 ### How to Connect Python Flask to HTML and CSS
  1. Move all HTML code into a folder named `templates`
- 2. all CSS and assets need to be moved to a folder named `static`
+ 2. All CSS and assets (like images) need to be moved to a folder named `static`
  3. To connect CSS to HTML add this link to the `<head>` tag of all HTML files.
     ```
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
