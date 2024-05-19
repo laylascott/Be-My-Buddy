@@ -1,4 +1,7 @@
-# Be My Buddy | Set Up Guide
+# Be My Buddy
+You can clone this repo to your computer and run it to see it for yourself.
+ [Directions for Running](#Running-your-App)
+# Set Up Guide
 
 Hi, Anya! Follow these steps to get your repository code up and running.
 
